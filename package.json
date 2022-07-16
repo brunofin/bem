@@ -1,0 +1,27 @@
+{
+  "name": "@brunofin/bem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.tsx",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brunofin/bem.git"
+  },
+  "keywords": [
+    "ui",
+    "react",
+    "bem"
+  ],
+  "author": "Bruno Finger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brunofin/bem/issues"
+  },
+  "homepage": "https://github.com/brunofin/bem#readme",
+  "dependencies": {
+    "classnames": "^2.3.1"
+  },
+  "peerDependencies": {
+    "typescript": "^4.7.4"
+  }
+}
