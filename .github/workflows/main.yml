@@ -20,7 +20,7 @@ jobs:
           # Defaults to the user or organization that owns the workflow file
           scope: '@protolane'
       - run: echo token ${{ secrets.NPM_TOKEN }}
-      - run: yarn
-      - run: yarn publish
+      - run: yarn npm login --scope protolane --publish
+      - run: yarn npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
