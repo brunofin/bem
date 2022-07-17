@@ -7,7 +7,7 @@ $standardModifiers: active, hover, focus, visited, focus-within, focus-visible
 /// BEM top-level *Block* abstraction.
 ///
 /// @parameter {string | list} $blockName - The name of the Block
-/// @parameter {string} $prefix [$gik-prefix] - Overrides the default prefix
+/// @parameter {string} $prefix [''] - Overrides the default prefix
 /// @content The styles to be applied to this block, including its child elements and modifiers
 /// @see {mixin} e
 /// @see {mixin} m
@@ -22,7 +22,7 @@ $standardModifiers: active, hover, focus, visited, focus-within, focus-visible
   @return $blocks
 
 
-@mixin b($blockName, $prefix: $gik-prefix) 
+@mixin b($blockName, $prefix: '') 
   #{b($blockName, $prefix)} 
     @content
 
