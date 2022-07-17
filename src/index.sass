@@ -1,0 +1,81 @@
+﻿@use 'sass:list'
+$standardModifiers: active, hover, focus, visited, focus-within, focus-visible
+
+@function prefix($blockName, $prefix: '') 
+  @return $prefix + $blockName
+
+/// BEM top-level *Block* abstraction.
+///
+/// @parameter {string | list} $blockName - The name of the Block
+/// @parameter {string} $prefix [$gik-prefix] - Overrides the default prefix
+/// @content The styles to be applied to this block, including its child elements and modifiers
+/// @see {mixin} e
+/// @see {mixin} m
+@function b($blockName, $prefix: '') 
+  @if (type-of($blockName) != 'list') 
+    $blockName: append((), $blockName)
+  
+  $blocks: ()
+  @each $block in $blockName 
+    $blocks: append($blocks, '.' + prefix($blockName, $prefix), comma)
+
+  @return $blocks
+
+
+@mixin b($blockName, $prefix: $gik-prefix) 
+  #{b($blockName, $prefix)} 
+    @content
+
+/// BEM *Element* level abstraction.
+///
+/// @param {string | list} $elementName - The name of the Element
+/// @content The styles to be applied to this element, including its modifiers
+/// @see {mixin} b
+/// @see {mixin} m
+@function e($elementName) 
+  @if (type-of($elementName) != 'list') 
+    $elementName: append((), $elementName)
+
+  $elements: ()
+  @each $elem in $elementName 
+    $elements: append($elements, '&__' + $elem, comma)
+
+  @return $elements
+
+@mixin e($elementName) 
+  #{e($elementName)} 
+    @content
+  
+/// BEM *Modifier* level abstraction.
+///
+/// @param {string | list} $modifierName - The name of the Modifier.
+//    If the modifier also happens to be a default pseudo-class such as `hover`,
+///   it will apply the styles both to the modifier className as well as directly to the pseudo-class as well.
+/// @param {string} $elementName [null] - If specified, applies the content to an inner element of the modifier root element.
+/// @content The styles to be applied to this modifier, including its modifiers
+/// @see {mixin} b
+/// @see {mixin} e
+@function m($modifierName, $elementName: null) 
+  @if (type-of($modifierName) != 'list') 
+    $modifierName: append((), $modifierName)
+
+  $modifiers: ()
+  @each $mod in $modifierName 
+    @if (list.index($standardModifiers, $mod)) 
+      @if ($elementName) 
+        $modifiers: append($modifiers, '&--' + $mod + ' &__' + $elementName + ', &:' + $mod + ' &__' + $elementName, comma)
+      @else 
+        $modifiers: append($modifiers, '&--' + $mod + ', &:' + $mod, comma)
+      
+    @else 
+      @if ($elementName) 
+        $modifiers: append($modifiers, '&--' + $mod + ' &__' + $elementName, comma)
+      @else 
+        $modifiers: append($modifiers, '&--' + $mod, comma)
+
+  @return $modifiers
+
+@mixin m($modifierName, $elementName: null) 
+  #{m($modifierName, $elementName)} 
+    @content
+  
